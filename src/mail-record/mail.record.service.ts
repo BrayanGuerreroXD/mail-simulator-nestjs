@@ -15,7 +15,6 @@ export class MailRecordService {
         @InjectModel(MailRecord.name) private mailRecordModel: Model<MailRecord>,
     ) {}
 
-    // FIXME: Validator not working
     async createMailRecord(createMailRecordDto: CreateMailRecordDto): Promise<SendMailResponseDto> {
         const mailRecord = new this.mailRecordModel(createMailRecordDto);
         await mailRecord.save();

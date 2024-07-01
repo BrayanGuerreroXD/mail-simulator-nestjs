@@ -6,24 +6,44 @@ import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { HttpExceptionFilter } from './exception-handler/http.exception.filter';
 
 async function bootstrap() {
+  // Check required environment variables
+  const requiredEnvVars = ['PORT', 'MONGO_URI'];
+  requiredEnvVars.forEach((envVar) => {
+    if (!process.env[envVar]) {
+      throw new Error(`Missing required environment variable: ${envVar}`);
+    }
+  });
+
+  // Uncaught exception and unhandled rejection handlers
+  process.on('uncaughtException', (err) => {
+    console.error('Uncaught Exception:', err);
+  });
+
+  process.on('unhandledRejection', (reason, promise) => {
+    console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  });
+
   const app = await NestFactory.create(AppModule);
-  await app.listen(process.env.PORT || 3000);
 
   app.use(morgan('dev'));
 
   app.useGlobalPipes(new ValidationPipe({
     transformOptions: {
-      enableImplicitConversion: true
-    }
+      enableImplicitConversion: true,
+    },
   }));
 
   const reflector = app.get(Reflector);
-  app.useGlobalInterceptors( new ClassSerializerInterceptor(reflector) );
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(reflector));
 
   app.useGlobalFilters(new HttpExceptionFilter());
 
   app.enableCors(CORS);
 
+  const port = process.env.PORT || 3000;
+  await app.listen(port);
+
   console.log(`Application is running on: ${await app.getUrl()}`);
 }
+
 bootstrap();
