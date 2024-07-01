@@ -1,73 +1,130 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+## Backend Technical Challenge: Mail Simulation API with NestJS
+## Table of Contents
+1. [Description](#description)
+2. [Technologies](#technologies)
+3. [Installation and Usage](#installation-and-usage)
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+___
+### Description: 
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+The Mail Simulation API is a backend service built using the NestJS framework that simulates the process of sending emails. It interacts with a MongoDB database to store information 
+about each email record and provides endpoints to retrieve and analyze the stored data. The API consists of the following key features and endpoints:
 
-## Description
+#### API Endpoints
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+1. **Send Mail Record (`POST /mail-record/send`)**
+   - **Description:** This endpoint receives a request to send an email and stores the provided information in the MongoDB database. The request should include the details of the email in the form of a `CreateMailRecordDto` object.
+   - **Request Body:**
+     ```json
+     {
+       "email": "socio@mail.com",
+       "plate": "123XYZ",
+       "message": "Email Message",
+       "parkingName": "Parking One"
+     }
+     ```
+   - **Response:** Returns a `SendMailResponseDto` object simulating the result of the email sending process.
 
-## Installation
+2. **Get All Mail Records (`GET /mail-record`)**
+   - **Description:** This endpoint retrieves all the email records stored in the MongoDB database.
+   - **Response:** Returns an array of `MailRecordResponseDto` objects, each containing the details of an email record.
 
-```bash
-$ npm install
-```
+3. **Find Most Frequent Email (`GET /mail-record/most-frequent-email`)**
+   - **Description:** This endpoint determines and returns the email address that appears most frequently in the stored records along with the count of its occurrences.
+   - **Response:** Returns an object containing the email address and its count.
+     ```json
+     {
+       "email": "socio@mail.com",
+       "count": 10
+     }
+     ```
 
-## Running the app
+4. **Get Mail Record Count Per Week (`GET /mail-record/count-per-week`)**
+   - **Description:** This endpoint calculates and returns the number of email records created each week.
+   - **Response:** Returns an array of objects, each containing a week date and the count of email records for that week.
+     ```json
+     [
+       {
+         "date": "2024-06-01",
+         "count": 5
+       },
+       {
+         "date": "2024-06-02",
+         "count": 7
+       }
+     ]
+     ```
+     
+___
+### Technologies:
+- [TypeScript](https://www.typescriptlang.org/ "TypeScript"): TypeScript is required to develop and run the API.
+- [Node.js](https://nodejs.org/ "Node.js"): Node.js runtime is required to use the API.
+- [NestJS](https://nestjs.com/ "NestJS"): NestJS framework is used to build the API.
+- [MongoDB](https://www.mongodb.com/ "MongoDB"): MongoDB is used as the database to store email records.
 
-```bash
-# development
-$ npm run start
+|Backend|
+|---|
+|![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white) ![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white) ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white) ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white) ![Git](https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white)|
 
-# watch mode
-$ npm run start:dev
 
-# production mode
-$ npm run start:prod
-```
+___
+### Installation and Usage:
 
-## Test
+1. **Clone the Project Repository**
 
-```bash
-# unit tests
-$ npm run test
+   Open your terminal and execute the following command to clone the mail-simulator-nestjs project repository:
 
-# e2e tests
-$ npm run test:e2e
+   ```bash
+    $ git clone https://github.com/BrayanGuerreroXD/mail-simulator-nestjs.git
+   ```
 
-# test coverage
-$ npm run test:cov
-```
+2. **Navigate to the Project Directory**
 
-## Support
+   Change your working directory to the project's root directory:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+   ```bash
+    $ cd mail-simulator-nestjs
+   ```
 
-## Stay in touch
+3. **Create and Configure .env File**
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+   Create a .env file in the root directory of the project with the following content. Replace the placeholder values with actual secrets:
 
-## License
+   ```dotenv
+     # MongoDB connection URI
+     MONGO_URI=mongodb://localhost:27017/mail-record-db
 
-Nest is [MIT licensed](LICENSE).
+     # Port number for the server
+     PORT=3000
+   ```
+   - MONGO_URI: Specifies the MongoDB connection URI where mail-record-db is the name of the database to be used for storing email records.
+   - PORT: Specifies the port number on which the server will run.
+
+     Ensure these values are kept secret and not shared publicly.
+
+5. I**nstall all dependencies**
+   
+    ```bash
+    $ npm install
+    ```
+
+6. **Running de app**
+
+    ```bash
+    # development
+    $ npm run start
+    
+    # watch mode
+    $ npm run start:dev
+    
+    # production mode
+    $ npm run start:prod
+    ```
+
+7. **Access the Application**
+
+   Once the application is running, you can access it at:
+
+   ```sh
+     http://localhost:3000
+   ```
