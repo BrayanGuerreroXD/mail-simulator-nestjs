@@ -1,10 +1,11 @@
-import { IsEmail, IsNotEmpty, IsString, Length, Matches } from "class-validator";
+import { IsEmail, IsNotEmpty, IsString, Length, Matches, MaxLength } from "class-validator";
 
 export class CreateMailRecordDto {
 
     @IsString({message: "Email must be a string"})
     @IsNotEmpty({message: "Email cannot be empty"})
     @IsEmail({}, {message: "Email is not valid"})
+    @MaxLength(50, {message: 'Email must be a maximum of 50 characters'})
     email: string;
 
     @IsString({message: "Plate must be a string"})
@@ -19,5 +20,6 @@ export class CreateMailRecordDto {
 
     @IsString({message: "Parking name must be a string"})
     @IsNotEmpty({message: "Parking name cannot be empty"})
+    @MaxLength(50, {message: 'Name must be a maximum of 50 characters'})
     parkingName: string;
 }

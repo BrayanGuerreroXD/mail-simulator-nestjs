@@ -3,7 +3,7 @@ import { NestFactory, Reflector } from '@nestjs/core';
 import * as morgan from 'morgan';
 import { CORS } from './constants/cors';
 import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
-import { HttpExceptionFilter } from './exception-handler/http.exception.filter';
+import { GlobalExceptionFilter } from './exception-handler/global.exception.filter';
 
 async function bootstrap() {
   // Check required environment variables
@@ -36,7 +36,7 @@ async function bootstrap() {
   const reflector = app.get(Reflector);
   app.useGlobalInterceptors(new ClassSerializerInterceptor(reflector));
 
-  app.useGlobalFilters(new HttpExceptionFilter());
+  app.useGlobalFilters(new GlobalExceptionFilter());
 
   app.enableCors(CORS);
 
