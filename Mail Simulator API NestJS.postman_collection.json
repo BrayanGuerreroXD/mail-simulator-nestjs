@@ -1,0 +1,134 @@
+{
+	"info": {
+		"_postman_id": "6163c23a-32ad-4cd5-af0d-41af71b64079",
+		"name": "Mail Simulator API NestJS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32530495"
+	},
+	"item": [
+		{
+			"name": "save-mail-record",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"socio-dos@mail.com\",\r\n    \"plate\": \"321HY2\",\r\n    \"message\": \"The vehicle is checked out\",\r\n    \"parkingName\": \"Parking One\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/mail-record/send",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"mail-record",
+						"send"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "most-frequent-email",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/mail-record/most-frequent-email",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"mail-record",
+						"most-frequent-email"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "count-per-week",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/mail-record/count-per-week",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"mail-record",
+						"count-per-week"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-records",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/mail-record",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"mail-record"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
