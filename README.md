@@ -57,10 +57,10 @@ about each email record and provides endpoints to retrieve and analyze the store
      
 ___
 ### Technologies:
-- [TypeScript](https://www.typescriptlang.org/ "TypeScript"): TypeScript is required to develop and run the API.
-- [Node.js](https://nodejs.org/ "Node.js"): Node.js runtime is required to use the API.
-- [NestJS](https://nestjs.com/ "NestJS"): NestJS framework is used to build the API.
-- [MongoDB](https://www.mongodb.com/ "MongoDB"): MongoDB is used as the database to store email records.
+- [TypeScript v5.1.3](https://www.typescriptlang.org/ "TypeScript"): TypeScript version 5.1.3 or higher is required for developing and running the API.
+- [Node.js v20.15.0](https://nodejs.org/ "Node.js"): Node.js version 20.15.0 or higher runtime is required to use the API.
+- [NestJS v10.0.0](https://nestjs.com/ "NestJS"): NestJS version 10.0.0 or higher framework is used to build the API.
+- [MongoDB v7.0.11](https://www.mongodb.com/ "MongoDB"): MongoDB version 7.0.11 or higher is used as the database to store email records.
 
 |Backend|
 |---|
