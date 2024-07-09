@@ -7,6 +7,8 @@ import { plainToInstance } from 'class-transformer';
 import { SendMailResponseDto } from './dto/send.mail.response.dto';
 import { MailRecordResponseDto } from './dto/mail.record.response.dto';
 import { format } from 'date-fns';
+import { MostFrequentEmailDto } from './dto/most.frequent.email.dto';
+import { MailCountPerWeekDto } from './dto/mail.count.per.week.dto';
 
 @Injectable()
 export class MailRecordService {
@@ -32,7 +34,7 @@ export class MailRecordService {
         }));
     }
 
-    async findMostFrequentEmail(): Promise<{ email: string, count: number }> {
+    async findMostFrequentEmail(): Promise<MostFrequentEmailDto> {
         const mailRecordList = await this.mailRecordModel.find().lean();
         if (mailRecordList.length === 0) {
             throw new Error("Mail record list is empty");
@@ -43,14 +45,14 @@ export class MailRecordService {
             return acc;
         }, {} as Record<string, number>);
     
-        const mostFrequentEmail = Object.entries(emailCountMap).reduce((acc, [email, count]) => {
+        const response = Object.entries(emailCountMap).reduce((acc, [email, count]) => {
             return count > acc.count ? { email, count } : acc;
         }, { email: "", count: 0 });
     
-        return mostFrequentEmail;
+        return new MostFrequentEmailDto(response?.email ?? '', response?.count ?? 0);
     }
 
-    async getMailRecordCountPerWeek(): Promise<{ date: string, count: number }[]> {
+    async getMailRecordCountPerWeek(): Promise<MailCountPerWeekDto[]> {
         const now = new Date();
         const oneWeekAgo = new Date(now.getTime() - 6 * 24 * 60 * 60 * 1000);
     
@@ -70,10 +72,7 @@ export class MailRecordService {
     
         return dateList.map(date => {
             const formattedDate = format(date, 'yyyy-MM-dd');
-            return {
-                date: formattedDate,
-                count: mailCountMap[formattedDate] || 0,
-            };
+            return new MailCountPerWeekDto(formattedDate, mailCountMap[formattedDate] || 0);
         });
     }       
 

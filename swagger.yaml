@@ -1,0 +1,211 @@
+openapi: 3.0.0
+paths:
+  /mail-record/send:
+    post:
+      operationId: MailRecordController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMailRecordDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendMailResponseDto'
+        '400':
+          description: Bad Request - Caused by an incorrect request object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    items:
+                      type: string
+                      example:
+                        - Email must be a maximum of 50 characters
+                        - Email is not valid
+                        - Email cannot be empty
+                        - Email must be a string
+                  error:
+                    type: string
+                    example: Bad Request
+                  status:
+                    type: number
+                    example: 400
+                  date:
+                    type: string
+                    example: '2024-07-09T15:38:57.877Z'
+      tags: &ref_0
+        - Mail Record
+  /mail-record:
+    get:
+      operationId: MailRecordController_findAll
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MailRecordResponseDto'
+      tags: *ref_0
+  /mail-record/most-frequent-email:
+    get:
+      operationId: MailRecordController_findMostFrequentEmail
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MostFrequentEmailDto'
+        '500':
+          description: Error - Caused by mail record list is empty
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    items:
+                      type: string
+                      example: Mail record list is empty
+                  error:
+                    type: string
+                    example: Error
+                  status:
+                    type: number
+                    example: 500
+                  date:
+                    type: string
+                    example: '2024-07-09T15:38:57.877Z'
+      tags: *ref_0
+  /mail-record/count-per-week:
+    get:
+      operationId: MailRecordController_getMailRecordCountPerWeek
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MailCountPerWeekDto'
+      tags: *ref_0
+info:
+  title: MAIL SIMULATION API
+  description: >-
+    The Mail Simulation API, built with NestJS, simulates email sending, stores
+    records in MongoDB, and offers data retrieval and analysis endpoints.
+  version: '1.0'
+  contact: {}
+tags: []
+servers: []
+components:
+  schemas:
+    CreateMailRecordDto:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email of the user
+          maxLength: 50
+          example: socio@mail.com
+        plate:
+          type: string
+          description: Plate of the vehicle
+          maxLength: 6
+          minLength: 6
+          example: ABC123
+        message:
+          type: string
+          description: Message to be sent
+          example: >-
+            The vehicle with plate ABC123 is parked in the wrong place. Please
+            move it.
+        parkingName:
+          type: string
+          description: Name of the parking
+          maxLength: 50
+          example: Parking 1
+      required:
+        - email
+        - plate
+        - message
+        - parkingName
+    SendMailResponseDto:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Message sent
+          example: Mail sent successfully
+      required:
+        - message
+    MailRecordResponseDto:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Message to be sent
+          example: >-
+            The vehicle with plate ABC123 is parked in the wrong place. Please
+            move it.
+        email:
+          type: string
+          description: Email of the user
+          example: socio@mail.com
+        plate:
+          type: string
+          description: Plate of the vehicle
+          example: ABC123
+        parkingName:
+          type: string
+          description: Name of the parking
+          example: Parking 1
+      required:
+        - message
+        - email
+        - plate
+        - parkingName
+    MostFrequentEmailDto:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email of the user
+          example: socio@mail.com
+        count:
+          type: number
+          description: Number of times the email has been sent
+          example: 5
+      required:
+        - email
+        - count
+    MailCountPerWeekDto:
+      type: object
+      properties:
+        date:
+          type: string
+          description: Date of the week
+          example: '2024-07-10'
+        count:
+          type: number
+          description: Number of emails sent in the week
+          example: 5
+      required:
+        - date
+        - count
