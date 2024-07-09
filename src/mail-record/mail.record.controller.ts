@@ -6,6 +6,7 @@ import { MailRecordResponseDto } from './dto/mail.record.response.dto';
 import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { MostFrequentEmailDto } from './dto/most.frequent.email.dto';
 import { MailCountPerWeekDto } from './dto/mail.count.per.week.dto';
+import { createErrorResponse } from 'src/config/base.swagger.error.response.options';
 
 @ApiTags('Mail Record')
 @Controller('mail-record')
@@ -14,27 +15,12 @@ export class MailRecordController {
 
   @ApiBody({ type: CreateMailRecordDto })
   @ApiResponse({ status: 201, type: SendMailResponseDto })
-  @ApiResponse({
-    status: 400,
-    description: 'Bad Request - Caused by an incorrect request object',
-    schema: {
-      type: 'object',
-      properties: {
-        message: {
-          type: 'array',
-          items: { type: 'string', example: [
-            "Email must be a maximum of 50 characters",
-            "Email is not valid",
-            "Email cannot be empty",
-            "Email must be a string"
-          ]}
-        },
-        error: { type: 'string', example: 'Bad Request'},
-        status: { type: 'number', example: 400},
-        date: { type: 'string', example: new Date().toISOString()}
-      }
-    }
-  })
+  @ApiResponse(createErrorResponse(HttpStatus.BAD_REQUEST, 'Bad Request - Caused by an incorrect request object', 'BadRequestException', [
+    "Email must be a maximum of 50 characters",
+    "Email is not valid",
+    "Email cannot be empty",
+    "Email must be a string"
+  ]))
   @Post("/send")
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() createMailRecordDto: CreateMailRecordDto) : Promise<SendMailResponseDto> {
@@ -49,22 +35,7 @@ export class MailRecordController {
   }
 
   @ApiResponse({ status: 200, type: MostFrequentEmailDto})
-  @ApiResponse({
-    status: 500,
-    description: 'Error - Caused by mail record list is empty',
-    schema: {
-      type: 'object',
-      properties: {
-        message: {
-          type: 'array',
-          items: { type: 'string', example: 'Mail record list is empty'}
-        },
-        error: { type: 'string', example: 'Error'},
-        status: { type: 'number', example: 500},
-        date: { type: 'string', example: new Date().toISOString()}
-      }
-    }
-  })
+  @ApiResponse(createErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, 'Error - Caused by mail record list is empty', 'Error', ['Mail record list is empty']))
   @Get("/most-frequent-email")
   @HttpCode(HttpStatus.OK)
   async findMostFrequentEmail(): Promise<MostFrequentEmailDto> {

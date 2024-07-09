@@ -33,15 +33,19 @@ paths:
                         - Email is not valid
                         - Email cannot be empty
                         - Email must be a string
+                      description: List of errors
                   error:
                     type: string
-                    example: Bad Request
+                    example: BadRequestException
+                    description: Error type
                   status:
                     type: number
                     example: 400
+                    description: HTTP status code
                   date:
                     type: string
-                    example: '2024-07-09T15:38:57.877Z'
+                    example: '2024-07-09T20:10:03.865Z'
+                    description: Date of the error
       tags: &ref_0
         - Mail Record
   /mail-record:
@@ -80,16 +84,21 @@ paths:
                     type: array
                     items:
                       type: string
-                      example: Mail record list is empty
+                      example:
+                        - Mail record list is empty
+                      description: List of errors
                   error:
                     type: string
                     example: Error
+                    description: Error type
                   status:
                     type: number
                     example: 500
+                    description: HTTP status code
                   date:
                     type: string
-                    example: '2024-07-09T15:38:57.877Z'
+                    example: '2024-07-09T20:10:03.866Z'
+                    description: Date of the error
       tags: *ref_0
   /mail-record/count-per-week:
     get:
